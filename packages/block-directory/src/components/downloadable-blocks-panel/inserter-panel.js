@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
-import { useDebounce } from '@wordpress/compose';
+import { useEffect } from '@wordpress/element';
 import { speak } from '@wordpress/a11y';
 
 function DownloadableBlocksInserterPanel( {
@@ -10,18 +10,20 @@ function DownloadableBlocksInserterPanel( {
 	downloadableItems,
 	hasLocalBlocks,
 } ) {
-	const debouncedSpeak = useDebounce( speak, 500 );
-	debouncedSpeak(
-		sprintf(
-			/* translators: %d: number of available blocks. */
-			_n(
-				'%d additional block is available to install.',
-				'%d additional blocks are available to install.',
-				downloadableItems.length
-			),
-			downloadableItems.length
-		)
-	);
+	const count = downloadableItems.length;
+	useEffect( () => {
+		speak(
+			sprintf(
+				/* translators: %d: number of available blocks. */
+				_n(
+					'%d additional block is available to install.',
+					'%d additional blocks are available to install.',
+					count
+				),
+				count
+			)
+		);
+	}, [ count ] );
 
 	return (
 		<>
