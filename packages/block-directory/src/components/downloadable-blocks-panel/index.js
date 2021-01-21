@@ -16,7 +16,6 @@ import { store as blockDirectoryStore } from '../../store';
 
 function DownloadableBlocksPanel( {
 	downloadableItems,
-	filterValue,
 	onSelect,
 	onHover,
 	hasLocalBlocks,
@@ -26,10 +25,8 @@ function DownloadableBlocksPanel( {
 } ) {
 	if ( typeof hasPermission === 'undefined' || isLoading || isTyping ) {
 		return (
-			<div className="block-directory-downloadable-blocks-panel__heading">
-				<p className="block-directory-downloadable-blocks-panel__description has-blocks-loading">
-					<Spinner />
-				</p>
+			<div className="block-directory-downloadable-blocks-panel has-blocks-loading">
+				<Spinner />
 			</div>
 		);
 	}
@@ -45,7 +42,6 @@ function DownloadableBlocksPanel( {
 	return !! downloadableItems.length ? (
 		<DownloadableBlocksInserterPanel
 			downloadableItems={ downloadableItems }
-			filterValue={ filterValue }
 			hasLocalBlocks={ hasLocalBlocks }
 		>
 			<DownloadableBlocksList
