@@ -36,7 +36,7 @@ describe( 'DownloadableBlockListItem', () => {
 		expect( description ).not.toBeNull();
 	} );
 
-	it( 'should show a spinner when installing the block', () => {
+	it( 'should show installing status when installing the block', () => {
 		useSelect.mockImplementation( () => ( {
 			isInstalling: true,
 			isInstallable: true,
@@ -45,8 +45,8 @@ describe( 'DownloadableBlockListItem', () => {
 		const { queryByText } = render(
 			<DownloadableBlockListItem onClick={ jest.fn() } item={ plugin } />
 		);
-		const spinner = queryByText( `Installing ${ plugin.title }` );
-		expect( spinner ).not.toBeNull();
+		const statusLabel = queryByText( 'Installing…' );
+		expect( statusLabel ).not.toBeNull();
 	} );
 
 	it( "should be disabled when a plugin can't be installed", () => {
