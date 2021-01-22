@@ -25,17 +25,18 @@ function DownloadableBlockListItem( { composite, item, onClick } ) {
 	// getBlockType returns a block object if this block exists, or null if not.
 	const isInstalled = !! getBlockType( item.name );
 
-	const { isInstalling, isInstallable } = useSelect(
+	const { isInstalling, isInstallable, notice } = useSelect(
 		( select ) => {
 			const {
 				getErrorNoticeForBlock,
 				isInstalling: isBlockInstalling,
 			} = select( blockDirectoryStore );
-			const notice = getErrorNoticeForBlock( item.id );
-			const hasFatal = notice && notice.isFatal;
+			const blockNotice = getErrorNoticeForBlock( item.id );
+			const hasFatal = blockNotice && blockNotice.isFatal;
 			return {
 				isInstalling: isBlockInstalling( item.id ),
 				isInstallable: ! hasFatal,
+				notice: blockNotice,
 			};
 		},
 		[ item ]
@@ -85,14 +86,28 @@ function DownloadableBlockListItem( { composite, item, onClick } ) {
 						}
 					) }
 				</span>
-				<BlockRatings rating={ rating } ratingCount={ ratingCount } />
-				<span className="block-directory-downloadable-block-list-item__desc">
-					{ !! statusText
-						? statusText
-						: decodeEntities( description ) }
-				</span>
-				{ isInstallable && ! ( isInstalled || isInstalling ) && (
-					<VisuallyHidden>{ __( 'Install block' ) }</VisuallyHidden>
+				{ notice && notice.message ? (
+					<span className="block-directory-downloadable-block-list-item__desc is-error">
+						{ notice.message }
+					</span>
+				) : (
+					<>
+						<BlockRatings
+							rating={ rating }
+							ratingCount={ ratingCount }
+						/>
+						<span className="block-directory-downloadable-block-list-item__desc">
+							{ !! statusText
+								? statusText
+								: decodeEntities( description ) }
+						</span>
+						{ isInstallable &&
+							! ( isInstalled || isInstalling ) && (
+								<VisuallyHidden>
+									{ __( 'Install block' ) }
+								</VisuallyHidden>
+							) }
+					</>
 				) }
 			</span>
 		</CompositeItem>

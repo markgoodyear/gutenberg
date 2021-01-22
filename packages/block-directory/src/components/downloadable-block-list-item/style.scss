@@ -13,6 +13,11 @@
 	&.is-busy {
 		background: transparent;
 	}
+
+	&:disabled,
+	&[aria-disabled] {
+		opacity: 1;
+	}
 }
 
 .block-directory-downloadable-block-list-item__icon {
@@ -54,4 +59,8 @@
 	grid-column-start: 1;
 	grid-column-end: span 2;
 	color: $gray-900;
+
+	&.is-error {
+		color: $alert-red;
+	}
 }
