@@ -1,5 +1,5 @@
 .block-directory-downloadable-block-list-item {
-	padding: $grid-unit-20;
+	padding: $grid-unit-15;
 	width: 100%;
 	height: auto;
 	text-align: left;
@@ -45,12 +45,13 @@
 
 .block-directory-downloadable-block-list-item__title {
 	display: block;
-	margin-bottom: $grid-unit-10;
+	font-weight: bold;
 }
 
 .block-directory-downloadable-block-list-item__author {
-	margin-top: $grid-unit-10;
-	color: $gray-700;
+	display: block;
+	margin-top: $grid-unit-05;
+	font-weight: normal;
 }
 
 .block-directory-downloadable-block-list-item__desc {
@@ -58,7 +59,6 @@
 	margin-top: $grid-unit-10;
 	grid-column-start: 1;
 	grid-column-end: span 2;
-	color: $gray-900;
 
 	&.is-error {
 		color: $alert-red;
